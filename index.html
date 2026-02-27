@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA: ADMISIÓN MIT - RANK S</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@400;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --morado-fondo: #e0c3fc;
+            --azul-fondo: #bde0fe;
+            --azul-leveling: rgba(10, 25, 47, 0.9);
+            --neon-blue: #00f2ff;
+            --glass-white: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--morado-fondo) 0%, var(--azul-fondo) 100%);
+            background-attachment: fixed;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .system-title { font-family: 'Great Vibes', cursive; font-size: 3.8rem; color: #000; margin: 10px 0; }
+        
+        .status-panel {
+            background: var(--azul-leveling);
+            border: 2px solid var(--neon-blue);
+            color: #fff; width: 100%; max-width: 850px;
+            padding: 15px; border-radius: 10px; margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            box-shadow: 0 0 15px var(--neon-blue);
+            position: relative;
+        }
+
+        .countdown-box { font-size: 0.8rem; color: #ff4757; margin-top: 5px; text-shadow: 0 0 5px red; }
+
+        .quick-nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .nav-icon { background: var(--azul-leveling); border: 1px solid var(--neon-blue); color: white; padding: 8px 15px; border-radius: 20px; text-decoration: none; font-size: 0.8rem; transition: 0.3s; cursor: pointer;}
+        .nav-icon:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 10px var(--neon-blue); }
+
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px; width: 100%; max-width: 950px;
+        }
+
+        .folder {
+            background: var(--glass-white);
+            border: 1px solid rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px; padding: 20px;
+            cursor: pointer; transition: 0.3s; text-align: center;
+            position: relative;
+        }
+        .folder:hover { transform: translateY(-5px); border-color: var(--neon-blue); }
+        .folder-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: #000; margin: 10px 0; }
+
+        /* Estilos Modales */
+        .modal {
+            display: none; position: fixed; z-index: 3000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            background: var(--azul-leveling);
+            border: 2px solid var(--neon-blue);
+            color: #fff; margin: 2% auto; padding: 30px;
+            border-radius: 15px; width: 90%; max-width: 800px;
+            max-height: 85vh; overflow-y: auto;
+        }
+
+        /* Checklist & Calendario */
+        .extra-section {
+            background: var(--azul-leveling);
+            color: white; width: 100%; max-width: 850px;
+            padding: 20px; border-radius: 15px; margin-top: 20px;
+            border: 1px solid var(--neon-blue);
+        }
+
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr);
+            gap: 5px; text-align: center; margin-top: 10px;
+        }
+        .cal-day { padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; font-size: 0.7rem; }
+        .deadline-active { background: var(--neon-blue); color: black; font-weight: bold; }
+
+        .checklist-item { display: flex; align-items: center; gap: 10px; margin: 10px 0; font-size: 0.9rem; }
+        input[type="checkbox"] { accent-color: var(--neon-blue); width: 18px; height: 18px; }
+
+        /* Decoración */
+        .senku-portrait { width: 150px; border-radius: 50%; border: 3px solid var(--neon-blue); margin-bottom: 10px; box-shadow: 0 0 15px var(--neon-blue); }
+        .senku-mini { position: absolute; top: 10px; right: 10px; width: 70px; filter: drop-shadow(0 0 5px green); }
+        .floating-snoopy { position: fixed; bottom: 20px; right: 20px; width: 80px; z-index: 100; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; color: white; font-size: 0.85rem; }
+        th, td { border: 1px solid var(--neon-blue); padding: 10px; text-align: left; }
+        th { background: rgba(0, 242, 255, 0.2); }
+
+        iframe { border-radius: 12px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <img src="https://wallpapers.com/images/hd/dr-stone-senku-ishigami-portrait-v4685o7m82mubf17.jpg" class="senku-portrait" alt="Senku">
+    <h1 class="system-title">SISTEMA: ADMISIÓN MIT</h1>
+
+    <div class="senku-quote" style="text-align: center; font-weight: bold; max-width: 800px; margin-bottom: 15px;">
+        "I will beat the fantasy with science." — Senku Ishigami <br>
+        <small>"Science is a way of thinking much more than it is a body of knowledge." — Carl Sagan</small><br>
+        <small>"The only thing we have to fear is fear itself." — FDR</small>
+    </div>
+
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX8NTLIvz9nuR?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+    <div class="quick-nav">
+        <a href="https://www.youtube.com" target="_blank" class="nav-icon">YouTube</a>
+        <a href="https://chatgpt.com" target="_blank" class="nav-icon">ChatGPT</a>
+        <a href="https://gemini.google.com" target="_blank" class="nav-icon">Gemini</a>
+        <a href="https://mitadmissions.org" target="_blank" class="nav-icon">MIT Portal</a>
+    </div>
+
+    <div class="status-panel">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHYwdWp4OXNqZ3Y0Z3Z4Z3Z4Z3Z4Z3Z4Z3Z4Z3Z4Z3Z4Z3Z4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9iJmN0PXM/senku.png" class="senku-mini">
+        <div>PLAYER: PAU | RANK: <span id="rank" style="color:var(--neon-blue)">E</span></div>
+        <div class="countdown-box">⏳ DAYS TO MIT DEADLINE: <span id="countdown">---</span></div>
+        <div>LEVEL: <span id="lvl">1</span> | XP: <span id="xp-num">0</span>%</div>
+        <div class="bar-bg"><div id="xp-bar" class="bar-fill"></div></div>
+        <div id="pomodoro">
+            ⏱️ <span id="timer">25:00</span> 
+            <button onclick="timerCtrl('start')" style="background:none; border:1px solid cyan; color:white; cursor:pointer;">START</button>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="folder" onclick="show('scholarships_modal')">
+            <h3 class="folder-title">BECAS & FINANCIAMIENTO</h3>
+            <small>MIT Financial Aid Info</small>
+        </div>
+        <div class="folder" onclick="show('sat_modal')">
+            <h3 class="folder-title">SAT & TESTS</h3>
+            <small>Bogotá Centers</small>
+        </div>
+        <div class="folder" onclick="show('essays_modal')">
+            <h3 class="folder-title">ENSAYOS MIT</h3>
+            <small>Prompts & Tips</small>
+        </div>
+    </div>
+
+    <div class="extra-section">
+        <h3 style="font-family: 'Orbitron'; color: var(--neon-blue);">MARZO 2026 - Misión: Bases</h3>
+        <div class="calendar-grid" id="calendar">
+            <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+            <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day deadline-active">13 (SAT Reg)</div><div class="cal-day">14</div>
+            </div>
+        <p style="font-size: 0.7rem; margin-top:10px;">*Los días en azul indican hitos importantes del sistema.</p>
+    </div>
+
+    <div class="extra-section">
+        <h3 style="font-family: 'Orbitron'; color: var(--neon-blue);">PAUSAS ACTIVAS (REGEN HP)</h3>
+        <div class="checklist-item"><input type="checkbox"> <span>Estiramiento de cuello (10 seg cada lado)</span></div>
+        <div class="checklist-item"><input type="checkbox"> <span>Regla 20-20-20 (Mirar a 20 pies por 20 seg)</span></div>
+        <div class="checklist-item"><input type="checkbox"> <span>Hidratación (Beber 1 vaso de agua)</span></div>
+        <div class="checklist-item"><input type="checkbox"> <span>Respiración profunda (5 ciclos)</span></div>
+    </div>
+
+    <div id="scholarships_modal" class="modal"><div class="modal-content">
+        <span onclick="hide('scholarships_modal')" style="float:right; cursor:pointer;">[X]</span>
+        <h2>Becas y Ayuda Financiera MIT</h2>
+        <p>El MIT es <b>Need-Blind</b> para extranjeros. Si entras, ellos pagan lo que tú no puedas.</p>
+        <table>
+            <tr><th>Beca</th><th>Cobertura</th><th>Requisito</th></tr>
+            <tr><td>MIT Scholarship</td><td>Matrícula completa</td><td>Necesidad financiera</td></tr>
+            <tr><td>CSS Profile</td><td>Variable</td><td>Formulario College Board</td></tr>
+            <tr><td>Pell Grant</td><td>Solo ciudadanos/res.</td><td>FAFSA</td></tr>
+        </table>
+        <p><b>Dato:</b> El promedio de la beca del MIT es de <b>$60,000 USD</b> anuales.</p>
+    </div></div>
+
+    <div id="sat_modal" class="modal"><div class="modal-content">
+        <span onclick="hide('sat_modal')" style="float:right; cursor:pointer;">[X]</span>
+        <h2>Exámenes en Bogotá</h2>
+        <p><b>Centros:</b> Colegio Nueva Granada, Colegio San Carlos, Colegio Abraham Lincoln.</p>
+        <p><b>Costo SAT:</b> $103 USD (~$420,000 COP).</p>
+        <p><b>Duolingo Test:</b> $59 USD. Necesitas 130+ para ser competitiva.</p>
+    </div></div>
+
+    <img src="https://pngimg.com/d/snoopy_PNG21.png" class="floating-snoopy">
+
+    <audio id="sfx-level" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+
+    <script>
+        function show(id) { document.getElementById(id).style.display = "block"; }
+        function hide(id) { document.getElementById(id).style.display = "none"; }
+        function playSfx() { document.getElementById('sfx-level').play(); }
+        
+        // --- COUNTDOWN ---
+        function updateCountdown() {
+            const deadline = new Date("November 1, 2026 00:00:00");
+            const diff = deadline - new Date();
+            document.getElementById('countdown').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)) + " DÍAS";
+        }
+        setInterval(updateCountdown, 1000);
+
+        // --- POMODORO ---
+        let timeLeft = 25 * 60;
+        function timerCtrl(action) {
+            playSfx();
+            setInterval(() => {
+                if(timeLeft > 0) {
+                    timeLeft--;
+                    let m = Math.floor(timeLeft / 60);
+                    let s = timeLeft % 60;
+                    document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
